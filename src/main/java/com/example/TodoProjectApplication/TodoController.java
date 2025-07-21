@@ -1,12 +1,14 @@
 package com.example.TodoProjectApplication;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/todos")
 public class TodoController {
     private static List<Todo>todoList;
 
@@ -17,7 +19,7 @@ public class TodoController {
         todoList.add(new Todo(3,true,"ThirdOne",3));
     }
     //GetRequest
-    @GetMapping("/todos")
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public List<Todo> getTodosList(){
         return todoList;
@@ -25,10 +27,22 @@ public class TodoController {
 
     //PostRequest
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/createtodos")
-    public void  createtodo(@RequestBody Todo newtodo){
+    @PostMapping("/")
+    public Todo  createtodo(@RequestBody Todo newtodo){
         todoList.add(newtodo);
-     //   return newtodo;
+        return newtodo;
+    }
+
+    //First User Function
+    @GetMapping("/{todoId}")
+    //@PathVariable Http Method path we mostly
+    public ResponseEntity<Todo> getTodoById(@PathVariable Long todoId){
+        for(Todo todo : todoList){
+            if(todo.getUserId() == todoId){
+                return ResponseEntity.ok(todo);
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
 
