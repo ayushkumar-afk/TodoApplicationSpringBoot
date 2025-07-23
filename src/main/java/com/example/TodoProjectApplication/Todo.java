@@ -6,6 +6,8 @@ public class Todo{
 	private String title;
 	private int userId;
 
+
+
 	public Todo(int that, boolean completed, String title, int userId) {
 		this.that = that;
 		this.completed = completed;
@@ -44,6 +46,8 @@ public class Todo{
 	public int getUserId(){
 		return userId;
 	}
+
+
 
 	@Override
  	public String toString(){
